@@ -1,0 +1,42 @@
+services:
+  frontend:
+    build:
+      #context: ./front-end
+      context: .
+      dockerfile: front-end/Dockerfile
+    container_name: frontend
+    ports:
+      - "3000:80" # port forward(docker host to Nginx Container)
+    depends_on:
+      - backend
+    restart: always
+
+  backend:
+    build:
+      context: ./back-end
+    container_name: backend
+    ports:
+      - "8080:8080" # port forward(docker host to SpringBoot Container)
+    depends_on:
+      - db
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      #SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/workflowdb?useSSL=false&serverTimezone=Asia/Tokyo
+      #SPRING_DATASOURCE_USERNAME: root
+      #SPRING_DATASOURCE_PASSWORD: password
+    restart: always
+
+  db:
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: workflowdb
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
