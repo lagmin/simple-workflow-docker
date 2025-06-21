@@ -21,6 +21,7 @@ services:
       - db
     environment:
       SPRING_PROFILES_ACTIVE: dev
+      CORS_ALLOWED_ORIGIN: ${CORS_ALLOWED_ORIGIN}
       #SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/workflowdb?useSSL=false&serverTimezone=Asia/Tokyo
       #SPRING_DATASOURCE_USERNAME: root
       #SPRING_DATASOURCE_PASSWORD: password
