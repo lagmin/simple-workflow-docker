@@ -21,10 +21,10 @@ services:
       - db
     environment:
       SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${DB_DATABASE}?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Tokyo
       CORS_ALLOWED_ORIGIN: ${CORS_ALLOWED_ORIGIN}
-      #SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/workflowdb?useSSL=false&serverTimezone=Asia/Tokyo
-      #SPRING_DATASOURCE_USERNAME: root
-      #SPRING_DATASOURCE_PASSWORD: password
     restart: always
 
   db:
@@ -34,8 +34,8 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: workflowdb
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
     volumes:
       - mysql-data:/var/lib/mysql
 
